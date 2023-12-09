@@ -20,6 +20,8 @@ import com.webapp.bankingportal.security.JwtAuthenticationEntryPoint;
 import com.webapp.bankingportal.security.JwtAuthenticationFilter;
 import com.webapp.bankingportal.service.JWTUserDetailsService;
 
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -53,14 +55,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeRequests(req -> req
-                                   .requestMatchers("/api/users/register").permitAll()
-                                   .requestMatchers("/api/users/login").permitAll()
-                                   .requestMatchers("/api/users/generate-otp").permitAll()
-                                   .requestMatchers("/api/users/verify-otp").permitAll()
-                                   .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                                   .anyRequest().authenticated()
-                                   )
+//                .authorizeRequests(req -> req
+//                                   .requestMatchers("/api/users/register").permitAll()
+//                                   .requestMatchers("/api/users/login").permitAll()
+//                                   .requestMatchers("/api/users/generate-otp").permitAll()
+//                                   .requestMatchers("/api/users/verify-otp").permitAll()
+//                                   .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+//                                   .anyRequest().authenticated()
+//                                   )
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .exceptionHandling(auth -> auth.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

@@ -1,5 +1,6 @@
 package com.webapp.bankingportal.config;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -17,10 +18,11 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 @EnableCaching
 public class CacheConfig {
 
+    List<String> cacheNames= Arrays.asList("otpAttempts");
     @Bean
     public CacheManager cacheManager() {
         CaffeineCacheManager cacheManager = new CaffeineCacheManager();
-        cacheManager.setCacheNames(List.of("otpAttempts")); // Define the cache name
+        cacheManager.setCacheNames(cacheNames); // Define the cache name
         cacheManager.setCaffeine(caffeineConfig());
         return cacheManager;
     }
